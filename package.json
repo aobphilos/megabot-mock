@@ -7,16 +7,23 @@
     "dev": "nodemon src/main",
     "start": "node src/main",
     "build": "prisma generate",
-    "db:push": "prisma db push"
+    "db:push": "prisma db push",
+    "publish:major": "standard-version --release-as major",
+    "publish:minor": "standard-version --release-as minor",
+    "publish:patch": "standard-version --release-as patch"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "megabot",
+    "mock"
+  ],
+  "author": "Batman Sysy",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^4.4.0",
     "dotenv": "^16.0.3",
     "hyper-express": "^6.4.10",
     "nodemon": "^2.0.20",
-    "prisma": "^4.4.0"
+    "prisma": "^4.4.0",
+    "standard-version": "^9.5.0"
   }
 }
