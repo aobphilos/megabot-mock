@@ -69,8 +69,12 @@ type EntityItem {
 }
 
 type ConversationContent {
-  intent   Intent?
-  entities EntityItem[]
+  id             String?
+  conversationId String?
+  networkId      String?
+  channelId      String?
+  intent         Intent?
+  entities       EntityItem[]
 }
 
 type BotIncomingMessage {
@@ -123,17 +127,7 @@ type Conversation {
   conversationId String
   networkId      String
   channelId      String
-  entities       ClassifiedEntity[]
-}
-
-type ClassifiedIntent {
-  intentName String
-  confidence Float
-}
-
-type ClassifiedEntity {
-  entityName  String
-  entityValue String
+  entities       EntityItem[]
 }
 
 model Outgoing {
