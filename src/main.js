@@ -226,7 +226,7 @@ const getOutgoingHandler = async (req, res) => {
       };
     } else {
       return {
-        "outgoingMessage.messages": { $elemMatch: { type: "text" } },
+        "outgoingMessage.messages": { $elemMatch: { type: type } },
       };
     }
   };
