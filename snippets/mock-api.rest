@@ -1,0 +1,227 @@
+# Localhost
+@host = http://localhost:3000
+# Loadtest
+# @host = https://megabot-api-mock.staging.amity.co
+
+
+### Test Mock Server (Enrich Hook) ###
+
+POST {{host}}/hooks/enrich HTTP/1.1
+Content-Type: application/json
+
+{
+  "user": {
+    "userId": "aecd751a-0155-46ff-a12b-eb349ab39c5d",
+    "networkId": "62b777091fc562b94996ade3",
+    "channelId": "62c6935bf85c8672c4ce11dr"
+  },
+  "channel": { "channelId": "62c6935bf85c8672c4ce11dr" }
+}
+
+### RESPONSE ###
+
+GET {{host}}/hooks/enrich/size HTTP/1.1
+
+### RESPONSE ###
+
+GET {{host}}/hooks/enrich/aecd751a-0155-46ff-a12b-eb349ab39c5d HTTP/1.1
+
+### RESPONSE ###
+
+DELETE {{host}}/hooks/enrich HTTP/1.1
+
+### RESPONSE ###
+
+
+### Test Mock Server (Classification Hook) ###
+
+POST {{host}}/hooks/classification HTTP/1.1
+Content-Type: application/json
+
+{
+  "transactionId": "5710866087648838",
+  "networkId": "62b777091fc562b94996ade3",
+  "user": {
+    "id": "63215388ea6ec8c4267341d4",
+    "networkId": "62b777091fc562b94996ade3",
+    "richmenuId": null,
+    "channelId": "62c6935bf85c8672c4ce11dr",
+    "userId": "aecd751a-0155-46ff-a12b-eb349ab39c5d",
+    "info": {
+      "displayName": "cat lover",
+      "imageUrl": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg",
+      "status": "?",
+      "metadata": { "age": "23", "job": "-" }
+    },
+    "createdAt": "2022-09-14T04:07:36.739Z",
+    "updatedAt": "2022-09-28T09:24:13.443Z"
+  },
+  "incomingMessage": {
+    "type": "text",
+    "channelId": "62c6935bf85c8672c4ce11dr",
+    "userId": "aecd751a-0155-46ff-a12b-eb349ab39c5d",
+    "payload": "hungry",
+    "isActive": true,
+    "networkId": "62b777091fc562b94996ade3"
+  },
+  "channel": { "channelId": "62c6935bf85c8672c4ce11dr" },
+  "conversation": {
+    "conversationId": "aecd751a-0155-46ff-a12b-eb349ab39c5d",
+    "networkId": "62b777091fc562b94996ade3",
+    "channelId": "62c6935bf85c8672c4ce11dr",
+    "entities": []
+  }
+}
+
+### RESPONSE ###
+
+GET {{host}}/hooks/classification/size HTTP/1.1
+
+### RESPONSE ###
+
+GET {{host}}/hooks/classification/aecd751a-0155-46ff-a12b-eb349ab39c5d HTTP/1.1
+
+### RESPONSE ###
+
+DELETE {{host}}/hooks/classification HTTP/1.1
+
+### RESPONSE ###
+
+
+### Test Mock Server (Template Hook) ###
+
+POST {{host}}/hooks/template HTTP/1.1
+Content-Type: application/json
+
+{
+  "user": {
+    "id": "63202dc9ea6ec8c4266fa41e",
+    "networkId": "62b777091fc562b94996ade3",
+    "richmenuId": null,
+    "channelId": "somechannelId",
+    "userId": "aecd751a-0155-46ff-a12b-eb349ab39c5d",
+    "info": {
+      "displayName": "cat lover",
+      "imageUrl": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg",
+      "status": "?",
+      "metadata": { "age": "23", "job": "-" }
+    },
+    "createdAt": "2022-09-13T07:14:17.864Z",
+    "updatedAt": "2022-09-28T08:25:45.842Z"
+  },
+  "channel": { "channelId": "somechannelId" },
+  "outgoingMessage": {
+    "userId": "aecd751a-0155-46ff-a12b-eb349ab39c5d",
+    "channelId": "somechannelId",
+    "messages": [
+      {
+        "type": "buttons",
+        "id": "l6yial2c",
+        "altText": "menu",
+        "actions": [
+          {
+            "id": "l6yiaswh",
+            "type": "template_action",
+            "label": "burger",
+            "templateName": "confirm"
+          },
+          {
+            "id": "l6yib0vr",
+            "type": "template_action",
+            "label": "chicken",
+            "templateName": "confirm"
+          }
+        ],
+        "text": "a"
+      }
+    ]
+  }
+}
+
+### RESPONSE ###
+
+GET {{host}}/hooks/template/size HTTP/1.1
+
+### RESPONSE ###
+
+GET {{host}}/hooks/template/aecd751a-0155-46ff-a12b-eb349ab39c5d HTTP/1.1
+
+### RESPONSE ###
+
+
+### Test Mock Server (Template Hook) ###
+DELETE {{host}}/hooks/template HTTP/1.1
+
+### RESPONSE ###
+
+
+### Test Mock Server (Outgoing Hook) ###
+POST {{host}}/hooks/outgoing HTTP/1.1
+Content-Type: application/json
+
+{
+    "transactionId": "5838616513403309",
+    "networkId": "62b777091fc562b94996ade3",
+    "user": {
+      "id": "6347b189ea6ec8c426170ac7",
+      "networkId": "62b777091fc562b94996ade3",
+      "richmenuId": null,
+      "channelId": "62c6935bf85c8672c4ce11dr",
+      "userId": "aecd751a-0155-46ff-a12b-eb349ab39c5d",
+      "info": {
+        "displayName": "cat lover",
+        "imageUrl": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg",
+        "status": "?",
+        "metadata": {
+          "age": "23",
+          "job": "-"
+        }
+      },
+      "createdAt": "2022-10-13T06:34:49.547Z",
+      "updatedAt": "2022-10-13T06:35:48.331Z"
+    },
+    "outgoingMessage": {
+      "networkId": "62b777091fc562b94996ade3",
+      "userId": "aecd751a-0155-46ff-a12b-eb349ab39c5d",
+      "channelId": "62c6935bf85c8672c4ce11dr",
+      "messages": [
+        {
+          "type": "buttons",
+          "id": "l6yi6pd3",
+          "altText": "confirm",
+          "actions": [
+            {
+              "id": "l6yi6vy7",
+              "type": "template_action",
+              "label": "yes",
+              "templateName": "thank_you"
+            },
+            {
+              "id": "l6yi72dc",
+              "type": "template_action",
+              "label": "no",
+              "templateName": "sorry"
+            }
+          ],
+          "text": "a"
+        }
+      ]
+    },
+    "channel": {
+      "channelId": "62c6935bf85c8672c4ce11dr"
+    }
+  }
+
+### RESPONSE ###
+
+GET {{host}}/hooks/outgoing/size HTTP/1.1
+
+### RESPONSE ###
+
+GET {{host}}/hooks/outgoing/aecd751a-0155-46ff-a12b-eb349ab39c5d HTTP/1.1
+
+### RESPONSE ###
+
+DELETE {{host}}/hooks/outgoing HTTP/1.1
+
+### RESPONSE ###

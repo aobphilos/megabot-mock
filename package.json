@@ -1,0 +1,22 @@
+{
+  "name": "megabot-mock",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/main",
+    "start": "node src/main",
+    "build": "prisma generate",
+    "db:push": "prisma db push"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^4.4.0",
+    "dotenv": "^16.0.3",
+    "hyper-express": "^6.4.10",
+    "nodemon": "^2.0.20",
+    "prisma": "^4.4.0"
+  }
+}

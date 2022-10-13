@@ -1,0 +1,152 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  engineType    = "library"
+  binaryTargets = ["native", "linux-musl"]
+  output        = "../dist/generated/prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Enrich {
+  id      String      @id @default(auto()) @map("_id") @db.ObjectId
+  user    UserChannel
+  channel IChannel
+}
+
+type UserChannel {
+  userId     String
+  networkId  String
+  channelId  String
+  richmenuId String?
+}
+
+model Template {
+  id              String               @id @default(auto()) @map("_id") @db.ObjectId
+  user            EnrichedUser
+  channel         ChannelContent
+  conversation    ConversationContent?
+  incomingMessage BotIncomingMessage?
+  outgoingMessage BotOutgoingMessage
+}
+
+type EnrichedUser {
+  id         String?
+  info       UserInfo
+  userId     String
+  networkId  String
+  channelId  String
+  richmenuId String?
+  createdAt  String
+  updatedAt  String
+}
+
+type UserInfo {
+  displayName String
+  status      String
+  imageUrl    String
+  metadata    Json?
+}
+
+type ChannelContent {
+  channelId String
+  botInfo   Json?
+}
+
+type Intent {
+  intentName String
+  confidence Float
+}
+
+type EntityItem {
+  entityName  String
+  entityValue String
+}
+
+type ConversationContent {
+  intent   Intent?
+  entities EntityItem[]
+}
+
+type BotIncomingMessage {
+  networkId String
+  userId    String
+  channelId String
+  payload   String
+  metadata  Json?
+  isActive  Boolean
+  type      IncomingMessageType
+  title     String?
+  address   String?
+  latitude  Float?
+  longitude Float?
+}
+
+enum IncomingMessageType {
+  text
+  postback
+  location
+}
+
+type BotOutgoingMessage {
+  networkId String?
+  userId    String
+  channelId String
+  messages  Json[]
+}
+
+model Classification {
+  id              String             @id @default(auto()) @map("_id") @db.ObjectId
+  channel         IChannel
+  incomingMessage BotIncomingMessage
+  networkId       String
+  transactionId   String
+  user            EnrichedUser
+  conversation    Conversation
+}
+
+type IChannel {
+  channelId String
+}
+
+type IUser {
+  userId String
+}
+
+type Conversation {
+  conversationId String
+  networkId      String
+  channelId      String
+  entities       ClassifiedEntity[]
+}
+
+type ClassifiedIntent {
+  intentName String
+  confidence Float
+}
+
+type ClassifiedEntity {
+  entityName  String
+  entityValue String
+}
+
+model Outgoing {
+  id              String             @id @default(auto()) @map("_id") @db.ObjectId
+  transactionId   String
+  networkId       String
+  user            EnrichedUser
+  action          Action?
+  channel         IChannel
+  outgoingMessage BotOutgoingMessage
+  timestamp       DateTime           @default(now())
+}
+
+type Action {
+  action   String
+  metadata Json?
+}
