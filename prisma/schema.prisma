@@ -106,6 +106,7 @@ model Classification {
   incomingMessage BotIncomingMessage
   networkId       String
   transactionId   String
+  action          Action?
   user            EnrichedUser
   conversation    Conversation
 }
