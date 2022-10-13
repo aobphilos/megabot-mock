@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/aobphilos/megabot-mock/compare/v1.0.2...v1.1.0) (2022-10-13)
+
+
+### Bug Fixes
+
+* 🐛 add more fields for Conversation in Template ([7f74b96](https://github.com/aobphilos/megabot-mock/commit/7f74b96d71bdaffcac7a850f3c313f1f2ad10b22))
+
 ### [1.0.2](https://github.com/aobphilos/megabot-mock/compare/v1.0.1...v1.0.2) (2022-10-13)
 
 
