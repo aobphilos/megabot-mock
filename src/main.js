@@ -10,11 +10,10 @@ const app = new HyperExpress.Server();
 const chatLogicId = process.env.CHAT_LOGIC_ID;
 const port = Number(process.env.PORT) || 3001;
 
-const response = {
-  template: new Map(),
-  enrich: new Map(),
-  outgoing: new Map(),
-  classification: new Map(),
+const OutgoingType = {
+  TEXT: "text",
+  MENU: "menu",
+  CONFIRM: "confirm",
 };
 
 const regex = {
@@ -207,11 +206,35 @@ app.get("/hooks/outgoing/size", async (req, res) => {
   const size = await prisma.outgoing.count();
   res.json(size);
 });
-app.get("/hooks/outgoing/:userId", async (req, res) => {
+
+const getOutgoingHandler = async (req, res) => {
   const userId = req.params.userId;
+  const type = req.params.type || OutgoingType.TEXT;
+
+  const filterByType = (type) => {
+    if (type === OutgoingType.MENU) {
+      return {
+        "outgoingMessage.messages": {
+          $elemMatch: { type: "buttons", altText: "menu" },
+        },
+      };
+    } else if (type === OutgoingType.CONFIRM) {
+      return {
+        "outgoingMessage.messages": {
+          $elemMatch: { type: "buttons", altText: "confirm" },
+        },
+      };
+    } else {
+      return {
+        "outgoingMessage.messages": { $elemMatch: { type: "text" } },
+      };
+    }
+  };
+
   const [item] = await prisma.outgoing.findRaw({
     filter: {
       "user.userId": userId,
+      ...filterByType(type),
     },
   });
   if (item) {
@@ -219,7 +242,9 @@ app.get("/hooks/outgoing/:userId", async (req, res) => {
   } else {
     res.status(404).end();
   }
-});
+};
+app.get("/hooks/outgoing/:userId/:type", getOutgoingHandler);
+app.get("/hooks/outgoing/:userId", getOutgoingHandler);
 app.delete("/hooks/outgoing", async (req, res) => {
   await prisma.outgoing.deleteMany();
   console.log("delete all outgoing");
