@@ -47,10 +47,12 @@ app.post("/hooks/classification", async (req, res) => {
 
   console.log(`receive classification -> ${JSON.stringify(data)}`);
 
-  if (regex.hungry.test(item.incomingMessage.payload)) {
+  const { incomingMessage, conversation } = data;
+
+  if (regex.hungry.test(incomingMessage.payload)) {
     return res.json({
       conversation: {
-        conversationId: item.conversation.conversationId,
+        conversationId: conversation.conversationId,
         intent: {
           intentName: "hungry",
           confidence: 1,
@@ -69,10 +71,10 @@ app.post("/hooks/classification", async (req, res) => {
         },
       },
     });
-  } else if (regex.location.test(item.incomingMessage.payload)) {
+  } else if (regex.location.test(incomingMessage.payload)) {
     return res.json({
       conversation: {
-        conversationId: item.conversation.conversationId,
+        conversationId: conversation.conversationId,
         intent: {
           intentName: "ask_location",
           confidence: 1,
@@ -91,7 +93,7 @@ app.post("/hooks/classification", async (req, res) => {
   }
   return res.json({
     conversation: {
-      conversationId: item.conversation.conversationId,
+      conversationId: conversation.conversationId,
       entities: [],
     },
     action: {
