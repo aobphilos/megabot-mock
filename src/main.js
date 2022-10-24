@@ -25,9 +25,7 @@ const regex = {
 app.post("/hooks/enrich", async (req, res) => {
   const data = await req.json();
 
-  const item = await prisma.enrich.create({ data });
-
-  console.log(`receive enrich -> ${JSON.stringify(item)}`);
+  console.log(`receive enrich -> ${JSON.stringify(data)}`);
 
   return res.json({
     user: {
@@ -42,37 +40,12 @@ app.post("/hooks/enrich", async (req, res) => {
     },
   });
 });
-app.get("/hooks/enrich/size", async (req, res) => {
-  const size = await prisma.enrich.count();
-  res.json(size);
-});
-app.get("/hooks/enrich/:userId", async (req, res) => {
-  const userId = req.params.userId;
-  const [item] = await prisma.enrich.findRaw({
-    filter: {
-      "user.userId": userId,
-    },
-  });
-
-  if (item) {
-    res.json(item);
-  } else {
-    res.status(404).end();
-  }
-});
-app.delete("/hooks/enrich", async (req, res) => {
-  await prisma.enrich.deleteMany();
-  console.log("delete all enriches");
-  res.send("OK");
-});
 
 // call to nlp api to get intent entity and action and return to unify bot server
 app.post("/hooks/classification", async (req, res) => {
   const data = await req.json();
 
-  const item = await prisma.classification.create({ data });
-
-  console.log(`receive classification -> ${JSON.stringify(item)}`);
+  console.log(`receive classification -> ${JSON.stringify(data)}`);
 
   if (regex.hungry.test(item.incomingMessage.payload)) {
     return res.json({
@@ -126,39 +99,14 @@ app.post("/hooks/classification", async (req, res) => {
     },
   });
 });
-app.get("/hooks/classification/size", async (req, res) => {
-  const size = await prisma.classification.count();
-  res.json(size);
-});
-app.get("/hooks/classification/:userId", async (req, res) => {
-  const userId = req.params.userId;
-  const [item] = await prisma.classification.findRaw({
-    filter: {
-      "user.userId": userId,
-    },
-  });
-
-  if (item) {
-    res.json(item);
-  } else {
-    res.status(404).end();
-  }
-});
-app.delete("/hooks/classification", async (req, res) => {
-  await prisma.classification.deleteMany();
-  console.log("delete all classifications");
-  res.send("OK");
-});
 
 // format the template message and return to unify bot server
 app.post("/hooks/template", async (req, res) => {
   const data = await req.json();
 
-  const item = await prisma.template.create({ data });
+  console.log(`receive template -> ${JSON.stringify(data)}`);
 
-  console.log(`receive template -> ${JSON.stringify(item)}`);
-
-  const { user, channel, outgoingMessage } = item;
+  const { user, channel, outgoingMessage } = data;
 
   return res.json({
     outgoingMessage: {
@@ -168,28 +116,6 @@ app.post("/hooks/template", async (req, res) => {
     },
     shouldContextualize: true,
   });
-});
-app.get("/hooks/template/size", async (req, res) => {
-  const size = await prisma.template.count();
-  res.json(size);
-});
-app.get("/hooks/template/:userId", async (req, res) => {
-  const userId = req.params.userId;
-  const [item] = await prisma.template.findRaw({
-    filter: {
-      "user.userId": userId,
-    },
-  });
-  if (item) {
-    res.json(item);
-  } else {
-    res.status(404).end();
-  }
-});
-app.delete("/hooks/template", async (req, res) => {
-  await prisma.template.deleteMany();
-  console.log("delete all templates");
-  res.send("OK");
 });
 
 // transform to channel message format and send to end user

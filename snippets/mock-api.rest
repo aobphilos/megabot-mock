@@ -218,7 +218,7 @@ GET {{host}}/hooks/outgoing/size HTTP/1.1
 
 ### RESPONSE ###
 
-GET {{host}}/hooks/outgoing/user-x-bot-01/confirm HTTP/1.1
+GET {{host}}/hooks/outgoing/aecd751a-0155-46ff-a12b-eb349ab39c5d/confirm HTTP/1.1
 
 ### RESPONSE ###
 
