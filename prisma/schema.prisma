@@ -97,11 +97,26 @@ enum IncomingMessageType {
   location
 }
 
+type IAction {
+  id           String
+  label        String
+  templateName String
+  type         String
+}
+
+type IMessageOptions {
+  actions IAction[]
+  altText String?
+  id      String
+  text    String
+  type    String
+}
+
 type BotOutgoingMessage {
   networkId String?
   userId    String
   channelId String
-  messages  Json[]
+  messages  IMessageOptions[]
 }
 
 model Classification {
@@ -139,6 +154,8 @@ model Outgoing {
   channel         IChannel
   outgoingMessage BotOutgoingMessage
   timestamp       DateTime           @default(now())
+
+  @@index([user.userId, outgoingMessage.messages.type], map: "idx_outgoing_by_type")
 }
 
 type Action {
