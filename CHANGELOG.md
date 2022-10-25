@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/aobphilos/megabot-mock/compare/v1.2.2...v1.3.0) (2022-10-25)
+
+
+### Features
+
+* 🎸 improve db query performance by index ([fa4c6cc](https://github.com/aobphilos/megabot-mock/commit/fa4c6cc25d77c0f8e906827c5a6f3eaaedd8b6e9))
+
 ### [1.2.2](https://github.com/aobphilos/megabot-mock/compare/v1.2.1...v1.2.2) (2022-10-24)
 
 
